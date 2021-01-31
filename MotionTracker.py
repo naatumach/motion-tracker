@@ -11,7 +11,7 @@ https://www.youtube.com/watch?v=zHnZ7sVHy1s
 """
 import cv2
 import sys
-import imutils
+#import imutils
 import numpy as np
 
 TrDict = {'csrt': cv2.TrackerCSRT_create,
@@ -27,7 +27,7 @@ trackers = cv2.MultiTracker_create()
 #v = cv2.VideoCapture('box5.mp4')
 #v = cv2.VideoCapture('vid3.mp4')
 #v = cv2.VideoCapture('still.mp4')
-v = cv2.VideoCapture('newgantry5.mp4')
+v = cv2.VideoCapture(r'2021-01\vid12.mp4')
 
 
 class ClassBox:
@@ -118,7 +118,7 @@ class ClassBox:
         self.stoppedAxis = None
         self.stoppedX = False
         self.stoppedY = False
-        if self.bufferArrayMeanY == 0.0:
+        if self.bufferArrayMeanX == 0.0:
             self.stoppedY = True
         if self.bufferArrayMeanX == 0.0:
             self.stoppedX = True
@@ -146,14 +146,14 @@ class ClassBox:
 ret, frame = v.read()
 #frame = imutils.resize(frame,width=600)
 
-k = 4
+k = 3
 
 roi = {boxlist: ClassBox() for boxlist in range(k)} #Region of interest
 
 for i in range (k):
     cv2.imshow('Frame',frame)
     bbi=cv2.selectROI('Frame',frame)
-    tracker_i = TrDict['mosse']()
+    tracker_i = TrDict['kcf']()
     trackers.add(tracker_i,frame,bbi)
 
     
